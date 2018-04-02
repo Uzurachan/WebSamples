@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <div id="yahoo">
+      <p>
+        <a href="https://www.yahoo.co.jp/">Yahoo!JAPAN</a>
+      </p>
+    </div>
+  <body>
+  <script type="text/javascript">
+    // Honestly we can use below js, but for some reason let me implement by myself...
+    // https://clipboardjs.com/
+
+    const yahooDiv = document.getElementById('yahoo');
+    // set clipboard copy event at anchor tag
+    Array.prototype.slice.call(yahooDiv.querySelectorAll(':scope a')).forEach(function(aTag) {
+      const href = aTag.getAttribute('href');
+
+      aTag.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.execCommand('copy'); // will fire 'copy' event!
+      });
+
+      aTag.addEventListener('copy', function(e) {
+        e.preventDefault();
+        if (e.clipboardData) {
+          e.clipboardData.setData('text/plain', href);
+          alert('Copied 2!');
+        } else if (window.clipboardData) {
+          window.clipboardData.setData('Text', href);
+          alert('Copied 3!');
+        }
+        return false;
+      });
+    });
+  </script>
+</html>
